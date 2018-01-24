@@ -8,8 +8,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String YEARS_CONST = "years";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +31,40 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        Button button = (Button) findViewById(R.id.calculateButton);
+        Button clear = (Button) findViewById(R.id.clearButton);
+
+        final EditText ageText = (EditText) findViewById(R.id.ageText);
+        final TextView textResponse = (TextView) findViewById(R.id.textDisplay);
+
+        button.setOnClickListener(new View.OnClickListener(){
+            CalculationUtility calc = new CalculationUtility();
+            int age = 0;
+
+            @Override
+            public void onClick(View v) {
+                if(!YEARS_CONST.equals(ageText.getText().toString())){
+                    age = Integer.parseInt(ageText.getText().toString());
+                }
+
+                if(calc.isAtLeastEighteen(age)) {
+                    textResponse.setText("THIS IS A TEST!");
+                }
+            }
+        });
+
+        clear.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                textResponse.setText("");
+            }
+        });
+
     }
 
-    //Test
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
